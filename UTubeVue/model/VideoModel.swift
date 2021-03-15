@@ -12,7 +12,7 @@ class VideoModel {
     func getVideoList()
         {
             let session = URLSession.shared
-        let url = URL(string: Constants.API_URL)!
+            let url = URL(string: Constants.API_URL)!
             
             let task = session.dataTask(with: url) { data, response, error in
                 
@@ -31,12 +31,20 @@ class VideoModel {
                     return
                 }
                 
+                // Decode data
                 do {
-                    let json = try JSONSerialization.jsonObject(with: data!, options: [])
-                    print("The Response is : ",json)
+                    let decoder = JSONDecoder()
+                    decoder.dateDecodingStrategy = .iso8601
+                    
+                    let response = try decoder.decode(VideoApiResponse.self, from: data!)
+                    
+                    dump(response)
+                    
                 } catch {
                     print("JSON error: \(error.localizedDescription)")
                 }
+                
+                
                 
             }
             task.resume()
