@@ -7,7 +7,13 @@
 
 import Foundation
 
+protocol VideoModelDelegate {
+    func videoRetrieved(_ videos:[Video])
+}
+
 class VideoModel {
+    
+    var delegate:VideoModelDelegate?
     
     func getVideoList()
         {
@@ -37,6 +43,19 @@ class VideoModel {
                     decoder.dateDecodingStrategy = .iso8601
                     
                     let response = try decoder.decode(VideoApiResponse.self, from: data!)
+                    
+                    
+                    if response.items != nil {
+                        
+                        DispatchQueue.main.async {
+                            
+                            // Call videoRetrieved method of the delegate
+                            
+                            self.delegate?.videoRetrieved(response.items!)
+                        }
+                        
+                    }
+                    
                     
                     dump(response)
                     
