@@ -2,8 +2,6 @@
 //  SceneDelegate.swift
 //  UTubeVue
 //
-//  Created by Jamshed Qureshi on 2021-03-14.
-//
 
 import UIKit
 

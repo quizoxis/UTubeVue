@@ -2,8 +2,6 @@
 //  Video.swift
 //  UTubeVue
 //
-//  Created by Jamshed Qureshi on 2021-03-15.
-//
 
 import Foundation
 

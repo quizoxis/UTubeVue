@@ -2,8 +2,6 @@
 //  ViewController.swift
 //  UTubeVue
 //
-//  Created by Jamshed Qureshi on 2021-03-14.
-//
 
 import UIKit
 
@@ -30,6 +28,24 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        // check if a video was indeed selected
+        guard tableView.indexPathForSelectedRow != nil else {
+            return
+        }
+        
+        // get a ref to the video that was tapped on
+        let selectedItem =  videoList[tableView.indexPathForSelectedRow!.row]
+        
+        // Detail view controller - Ref
+        let destinationVC = segue.destination as! DetailViewController
+        
+        // Detail View Controller - Set Video
+        destinationVC.video = selectedItem
+        
+    }
+    
     // MARK: Video Model Delegate
     func videoRetrieved(_ videos: [Video]) {
         // set the retrieved videos
@@ -39,7 +55,7 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
         tableView.reloadData()
     }
 
-    // MARK: TableView Datasource Methods
+    // MARK: Video TableView Datasource Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return videoList.count
@@ -47,19 +63,19 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.UI_TABLE_CELL_VIDEO, for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.UI_TABLE_CELL_VIDEO, for: indexPath) as! VideoTableViewCell
         
         // Configure Cell
-        let title = self.videoList[indexPath.row].title
+        let video = self.videoList[indexPath.row]
         
-        cell.textLabel?.text = title
+        cell.setCell(video)
         
         // Return Cell
         return cell
         
     }
     
-    // MARK: TableView Delegate Methods
+    // MARK: Video TableView Delegate Methods
     // Customize methods to handle user interaction like tap
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

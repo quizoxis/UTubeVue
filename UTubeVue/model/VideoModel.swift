@@ -2,8 +2,6 @@
 //  VideoModel.swift
 //  UTubeVue
 //
-//  Created by Jamshed Qureshi on 2021-03-15.
-//
 
 import Foundation
 
@@ -37,6 +35,7 @@ class VideoModel {
                     return
                 }
                 
+                
                 // Decode data
                 do {
                     let decoder = JSONDecoder()
@@ -56,8 +55,6 @@ class VideoModel {
                         
                     }
                     
-                    
-                    dump(response)
                     
                 } catch {
                     print("JSON error: \(error.localizedDescription)")
